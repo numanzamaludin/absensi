@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 1rem;
+    background: #f4f4f8;
+    color: #333;
+}
+
+h2, h3 {
+    margin-top: 1.2rem;
+}
+
+a {
+    text-decoration: none;
+    color: #0057b8;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card p, .card li, .card form, .card table {
+    margin: 0.5rem 0;
+}
+
+.form-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-inline select, .form-inline button {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .5rem;
+}
+
+table th, table td {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+@media (min-width: 600px) {
+    .form-inline {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .form-inline label {
+        margin-right: 0.5rem;
+    }
+}
+
+
+
+
+
+
+
+
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+.table-absensi {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+.table-absensi th,
+.table-absensi td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table-absensi th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.btn-accept,
+.btn-reject,
+.btn-link {
+    padding: 4px 6px;
+    margin-right: 2px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.btn-accept {
+    background-color: #d4f4dd;
+    color: green;
+}
+
+.btn-reject {
+    background-color: #fddcdc;
+    color: red;
+}
+
+.btn-link {
+    background-color: #e4e4e4;
+    text-decoration: none;
+    color: #333;
+    padding: 4px 6px;
+    border-radius: 4px;
+}

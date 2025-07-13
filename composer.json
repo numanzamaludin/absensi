@@ -1,0 +1,17 @@
+{
+    "name": "smksperkasa2nu/absensi2",
+    "autoload": {
+        "psr-4": {
+            "Smksperkasa2nu\\Absensi2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "numanisme"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.4"
+    }
+    
+}
