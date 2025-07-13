@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/absensi2/core/Database.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/absensi/core/Database.php';
 
 class RekapModel
 {
