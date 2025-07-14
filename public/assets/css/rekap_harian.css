@@ -15,7 +15,9 @@ body {
     background: #ffffff;
     padding: 1.2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 1rem;
 }
 
 h2 {
@@ -69,35 +71,38 @@ h2 {
     background-color: #218838;
 }
 
-.sort-buttons {
-    margin: 10px 0;
-}
-
+.sort-buttons,
 .export-buttons {
     margin: 10px 0;
 }
 
+/* ✅ Scroll hanya tabel */
 .table-wrapper {
     overflow-x: auto;
+    width: 100%;
     margin-top: 1rem;
 }
 
-table {
+/* ✅ Tabel responsif */
+.absensi-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 600px;
+    min-width: 800px; /* agar tetap scroll di layar kecil */
 }
 
-th, td {
+.absensi-table th,
+.absensi-table td {
     padding: 0.6rem;
     border: 1px solid #ddd;
     text-align: center;
     font-size: 0.95rem;
+    white-space: nowrap;
 }
 
-th {
+.absensi-table th {
     background-color: #f0f0f0;
     position: sticky;
     top: 0;
     z-index: 1;
+    font-weight: bold;
 }
