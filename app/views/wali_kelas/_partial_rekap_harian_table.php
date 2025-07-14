@@ -24,19 +24,20 @@ $kelas = $kelas ?? '-';
 $wali = $wali ?? '-';
 ?>
 
-<!-- 📋 INFO KELAS -->
+<!-- ✅ INFO KELAS (di luar scroll) -->
 <div class="card info-card">
-    <p><strong>Kelas:</strong> <?= htmlspecialchars(is_array($kelas) ? $kelas['nama_kelas'] ?? '-' : $kelas) ?></p>
-    <p><strong>Wali Kelas:</strong> <?= htmlspecialchars(is_array($wali) ? $wali['nama_guru'] ?? '-' : $wali) ?></p>
+    <p><strong>Kelas:</strong> <?= htmlspecialchars(is_array($kelas) ? ($kelas['nama_kelas'] ?? '-') : $kelas) ?></p>
+    <p><strong>Wali Kelas:</strong> <?= htmlspecialchars(is_array($wali) ? ($wali['nama_guru'] ?? '-') : $wali) ?></p>
     <p><strong>Tanggal:</strong> <?= "$tanggalDipilih " . date('F', mktime(0, 0, 0, $bulanDipilih, 1)) . " $tahunDipilih ($hariIndo)" ?></p>
 </div>
 
-<!-- 📊 TABEL ABSENSI -->
+<!-- ✅ TABEL ABSENSI -->
 <?php if (empty($data)): ?>
     <p><em>Tidak ada data kehadiran pada tanggal ini.</em></p>
 <?php else: ?>
-    <div class="table-scroll">
-        <table class="absensi-table" border="1" cellpadding="6" cellspacing="0">
+    <!-- ⬇️ Scroll khusus untuk tabel -->
+    <div class="table-wrapper">
+        <table class="absensi-table">
             <thead>
                 <tr>
                     <th>Nama Siswa</th>

@@ -11,10 +11,10 @@
     <input type="password" name="password"><br><br>
 
     
-<select name="role" required>
+<!-- <select name="role" required>
         <option value="guru">Guru</option>
         <option value="admin">Admin</option>
-    </select><br><br>
+    </select><br><br> -->
 
 
     <button type="submit">Update</button>
