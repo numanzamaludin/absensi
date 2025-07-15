@@ -199,6 +199,14 @@ $namaGuru = $_SESSION['user']['nama'] ?? $_SESSION['user']['email'];
         <p><a href="?page=rekap_bulanan_guru">📊 Rekap Absensi Bulanan</a></p>
     </div>
 
+
+
+    <div style="text-align:center; margin-top:1rem;">
+        <a href="?page=ganti_password">🔑 Ganti Password</a>
+    </div>
+
+
+
     <div style="text-align:center; margin-top:2rem;">
         <a href="?page=logout">🔓 Logout</a>
     </div>

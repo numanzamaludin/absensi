@@ -24,9 +24,13 @@ class AbsensiController
             $mapel = $this->model->getMapelById($id_mapel);
 
             if (!$id_guru_mapel) {
-                echo "<p style='color:red;'>Tidak ditemukan relasi guru-mapel-kelas.</p>";
+                echo "<script>
+                    alert('Tidak ditemukan relasi guru-mapel-kelas.');
+                    window.history.back();
+                </script>";
                 return;
             }
+
 
             // ✅ Cek Jadwal Hari & Jam Sekarang
             $hariMap = [
@@ -56,9 +60,13 @@ class AbsensiController
             $jadwalAktif = $stmt->fetch();
 
             if (!$jadwalAktif) {
-                echo "<p style='color:red;'>Anda tidak memiliki jadwal mengajar saat ini (hari ini: $hariSekarang, jam: $jamSekarang).</p>";
+                echo "<script>
+                    alert('Anda tidak memiliki jadwal mengajar saat ini (hari ini: $hariSekarang, jam: $jamSekarang).');
+                    window.history.back();
+                </script>";
                 return;
             }
+
 
             // ✅ Tampilkan form absensi
             require __DIR__ . '/../views/absensi/form.php';

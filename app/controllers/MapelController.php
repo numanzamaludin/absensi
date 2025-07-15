@@ -1,19 +1,26 @@
 <?php
 require_once __DIR__ . '/../models/MapelModel.php';
 
-class MapelController {
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+
+class MapelController
+{
     private $model;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->model = new MapelModel();
     }
 
-    public function index() {
+    public function index()
+    {
         $data = $this->model->getAll();
         include __DIR__ . '/../views/mapel/index.php';
     }
 
-    public function tambah() {
+    public function tambah()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->insert($_POST);
             header("Location: ?page=mapel_index");
@@ -22,7 +29,8 @@ class MapelController {
         include __DIR__ . '/../views/mapel/tambah.php';
     }
 
-    public function edit() {
+    public function edit()
+    {
         $id = $_GET['id'] ?? null;
         if (!$id) die("ID tidak ditemukan");
 
@@ -36,12 +44,56 @@ class MapelController {
         include __DIR__ . '/../views/mapel/edit.php';
     }
 
-    public function hapus() {
+    public function hapus()
+    {
         $id = $_GET['id'] ?? null;
         if ($id) {
             $this->model->delete($id);
         }
         header("Location: ?page=mapel_index");
         exit;
+    }
+
+
+
+
+    public function importMapelProses()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file_excel'])) {
+            $file = $_FILES['file_excel']['tmp_name'];
+
+            $spreadsheet = IOFactory::load($file);
+            $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+            unset($sheet[0]); // hilangkan baris header
+
+            require_once __DIR__ . '/../models/MapelModel.php';
+            $mapelModel = new MapelModel();
+            $errors = [];
+
+            foreach ($sheet as $row) {
+                $nama_mapel = trim($row[0] ?? '');
+                $kode_mapel = trim($row[1] ?? '');
+
+                if (!$nama_mapel || !$kode_mapel) {
+                    $errors[] = "Data kosong pada baris: $nama_mapel / $kode_mapel";
+                    continue;
+                }
+
+                $mapelModel->insert([
+                    'nama_mapel' => $nama_mapel,
+                    'kode_mapel' => $kode_mapel
+                ]);
+            }
+
+            if (!empty($errors)) {
+                echo "<h4>Beberapa data gagal diimport:</h4><ul>";
+                foreach ($errors as $err) echo "<li>$err</li>";
+                echo "</ul><a href='?page=mapel'>⬅ Kembali</a>";
+            } else {
+                header("Location: ?page=mapel_index");
+                exit;
+            }
+        }
     }
 }

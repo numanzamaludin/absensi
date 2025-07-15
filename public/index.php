@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 
@@ -305,6 +309,86 @@ switch ($page) {
         $rekapController = new RekapController();
         $rekapController->ajaxRekapKehadiranHarian();
         break;
+
+
+
+
+
+    case 'guru_import':
+        include __DIR__ . '/../app/views/guru/guru_import.php';
+        break;
+
+    case 'guru_import_proses':
+        require_once __DIR__ . '/../app/controllers/GuruController.php';
+        $controller = new GuruController();
+        $controller->importGuruProses();
+        break;
+
+
+    case 'mapel_import':
+        include __DIR__ . '/../app/views/mapel/mapel_import.php';
+        break;
+
+    case 'mapel_import_proses':
+        require_once __DIR__ . '/../app/controllers/MapelController.php';
+        $controller = new MapelController();
+        $controller->importMapelProses();
+        break;
+
+
+
+    case 'ganti_password':
+        include __DIR__ . '/../app/views/dashboard/ganti_password.php';
+        break;
+
+
+
+
+    case 'admin_redeem':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->index();
+        break;
+
+    case 'admin_redeem_import':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->import();
+        break;
+
+    case 'admin_redeem_export':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->export();
+        break;
+
+
+
+
+
+    case 'admin_redeem_create':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->create();
+        break;
+
+    case 'admin_redeem_store':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->store();
+        break;
+
+    case 'admin_redeem_edit':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->edit();
+        break;
+
+    case 'admin_redeem_update':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->update();
+        break;
+
+    case 'admin_redeem_delete':
+        require_once __DIR__ . '/../app/controllers/AdminRedeemController.php';
+        (new AdminRedeemController())->delete();
+        break;
+
+
 
 
 
