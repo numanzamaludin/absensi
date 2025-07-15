@@ -37,14 +37,9 @@ header("Pragma: no-cache");
     <br>
     <a href="?page=jadwal">Jadwal</a>
     <br>
-    <br>
+    <a href="?page=admin_redeem"><strong>🎓 Redeem Email Massal</strong></a> <!-- ✅ Tambahan Link -->
+    <br><br>
     <a href="?page=logout">Logout</a>
-
-
-
-
-
-
 </body>
 
 </html>

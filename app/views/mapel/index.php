@@ -1,5 +1,11 @@
 <h2>Data Mata Pelajaran</h2>
-<a href="?page=mapel_tambah">+ Tambah Mapel</a>
+
+<a href="?page=dashboard">⬅ Kembali ke Dashboard</a> |
+<a href="?page=mapel_tambah">+ Tambah Mapel</a> |
+<a href="?page=mapel_import">📥 Import Mapel</a>
+
+<br><br>
+
 <table border="1" cellpadding="8" cellspacing="0">
     <tr>
         <th>No</th>

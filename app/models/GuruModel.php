@@ -66,4 +66,16 @@ class GuruModel
         $stmt = $this->db->prepare("DELETE FROM guru WHERE id_guru = :id");
         return $stmt->execute(['id' => $id]);
     }
+
+
+
+
+
+
+    public function emailExists($email)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM guru WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetchColumn() > 0;
+    }
 }
