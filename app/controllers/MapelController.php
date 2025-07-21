@@ -3,7 +3,6 @@ require_once __DIR__ . '/../models/MapelModel.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-
 class MapelController
 {
     private $model;
@@ -16,6 +15,7 @@ class MapelController
     public function index()
     {
         $data = $this->model->getAll();
+        $status = $_GET['status'] ?? null;
         include __DIR__ . '/../views/mapel/index.php';
     }
 
@@ -47,15 +47,22 @@ class MapelController
     public function hapus()
     {
         $id = $_GET['id'] ?? null;
-        if ($id) {
-            $this->model->delete($id);
+
+        if (!$id) {
+            header("Location: ?page=mapel_index&status=id_invalid");
+            exit;
         }
-        header("Location: ?page=mapel_index");
+
+        // Cek apakah mapel masih digunakan di guru_mapel
+        if ($this->model->isUsedInGuruMapel($id)) {
+            header("Location: ?page=mapel_index&status=gagal_dihapus");
+            exit;
+        }
+
+        $this->model->delete($id);
+        header("Location: ?page=mapel_index&status=hapus_berhasil");
         exit;
     }
-
-
-
 
     public function importMapelProses()
     {
@@ -67,8 +74,6 @@ class MapelController
 
             unset($sheet[0]); // hilangkan baris header
 
-            require_once __DIR__ . '/../models/MapelModel.php';
-            $mapelModel = new MapelModel();
             $errors = [];
 
             foreach ($sheet as $row) {
@@ -80,7 +85,7 @@ class MapelController
                     continue;
                 }
 
-                $mapelModel->insert([
+                $this->model->insert([
                     'nama_mapel' => $nama_mapel,
                     'kode_mapel' => $kode_mapel
                 ]);
@@ -91,7 +96,7 @@ class MapelController
                 foreach ($errors as $err) echo "<li>$err</li>";
                 echo "</ul><a href='?page=mapel'>⬅ Kembali</a>";
             } else {
-                header("Location: ?page=mapel_index");
+                header("Location: ?page=mapel_index&status=import_sukses");
                 exit;
             }
         }

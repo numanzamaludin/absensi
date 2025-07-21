@@ -60,4 +60,12 @@ class MapelModel
         $stmt->execute([$kode]);
         return $stmt->fetchColumn() > 0;
     }
+
+
+    public function isUsedInGuruMapel($id_mapel)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM guru_mapel WHERE id_mapel = ?");
+        $stmt->execute([$id_mapel]);
+        return $stmt->fetchColumn() > 0;
+    }
 }

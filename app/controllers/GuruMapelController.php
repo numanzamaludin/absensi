@@ -44,6 +44,9 @@ class GuruMapelController
         $id = $_GET['id'] ?? null;
         if (!$id) die('ID tidak ditemukan');
 
+        $kelasModel = new KelasModel();
+        $kelas = $kelasModel->getAll();
+
         $guruModel = new GuruModel();
         $mapelModel = new MapelModel();
         $gurus = $guruModel->getAll();
@@ -62,10 +65,23 @@ class GuruMapelController
     public function hapus()
     {
         $id = $_GET['id'] ?? null;
-        if ($id) {
-            $this->model->delete($id);
+
+        if (!$id) {
+            header("Location: ?page=guru_mapel_index&status=invalid_id");
+            exit;
         }
-        header("Location: ?page=guru_mapel_index");
+
+        if ($this->model->isUsedInAbsensi($id)) {
+            header("Location: ?page=guru_mapel_index&status=terkait_absensi");
+            exit;
+        }
+
+
+
+
+
+        $this->model->delete($id);
+        header("Location: ?page=guru_mapel_index&status=sukses");
         exit;
     }
 }

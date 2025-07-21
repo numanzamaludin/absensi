@@ -44,13 +44,15 @@ class GuruMapelModel
 
     public function update($id, $data)
     {
-        $stmt = $this->db->prepare("UPDATE guru_mapel SET id_guru = :id_guru, id_mapel = :id_mapel WHERE id_guru_mapel = :id");
+        $stmt = $this->db->prepare("UPDATE guru_mapel SET id_guru = ?, id_mapel = ?, id_kelas = ? WHERE id_guru_mapel = ?");
         return $stmt->execute([
-            'id' => $id,
-            'id_guru' => $data['id_guru'],
-            'id_mapel' => $data['id_mapel']
+            $data['id_guru'],
+            $data['id_mapel'],
+            $data['id_kelas'],
+            $id
         ]);
     }
+
 
     public function delete($id)
     {
@@ -71,5 +73,14 @@ class GuruMapelModel
     ");
         $stmt->execute(['id_guru' => $id_guru]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+    public function isUsedInAbsensi($id_guru_mapel)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM absensi WHERE id_guru_mapel = ?");
+        $stmt->execute([$id_guru_mapel]);
+        return $stmt->fetchColumn() > 0;
     }
 }
