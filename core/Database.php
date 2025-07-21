@@ -7,7 +7,7 @@ class Database
     {
         if (!self::$connection) {
             try {
-                $config = require __DIR__ . '/../config.php';
+                $config = require __DIR__ . '/config.php';
 
                 $host     = $config['db_host'];
                 $dbname   = $config['db_name'];
