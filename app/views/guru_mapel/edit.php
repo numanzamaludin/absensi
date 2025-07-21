@@ -22,6 +22,18 @@
     </select>
     <br><br>
 
+    <label for="id_kelas">Kelas:</label>
+    <select name="id_kelas" required>
+        <option value="">-- Pilih Kelas --</option>
+        <?php foreach ($kelas as $k): ?>
+            <option value="<?= $k['id_kelas'] ?>" <?= $k['id_kelas'] == $data['id_kelas'] ? 'selected' : '' ?>>
+                <?= $k['nama_kelas'] ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <br><br>
+
+
     <button type="submit">Update</button>
     <a href="?page=guru_mapel_index">Batal</a>
 </form>

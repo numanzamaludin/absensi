@@ -8,7 +8,7 @@ class Database
         if (!self::$connection) {
             try {
                 $host = 'localhost';
-                $dbname = 'absensi';
+                $dbname = 'smkw2994_absensi';
                 $username = 'root';
                 $password = '';
 
