@@ -7,12 +7,10 @@ class Database
     {
         if (!self::$connection) {
             try {
-                $config = require __DIR__ . '/../config.php';
-
-                $host     = $config['db_host'];
-                $dbname   = $config['db_name'];
-                $username = $config['db_user'];
-                $password = $config['db_password'];
+                $host = 'localhost';
+                $dbname = 'smkw2994_absensi';
+                $username = 'root';
+                $password = '';
 
                 self::$connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
