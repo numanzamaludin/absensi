@@ -1,73 +1,106 @@
-<h2>Daftar Guru & Mata Pelajaran</h2>
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: ?page=login");
+    exit;
+}
+?>
 
-<a href="?page=guru_mapel_tambah">+ Tambah Guru Mapel</a>
-<br><br>
+<!DOCTYPE html>
+<html lang="id">
 
-<!-- Filter Kelas -->
-<label for="filterKelas">Filter Kelas:</label>
-<select id="filterKelas">
-    <option value="">Semua</option>
-    <?php
-    // Ambil daftar kelas unik dari data
-    $kelasList = array_unique(array_map(fn($d) => $d['nama_kelas'], $data));
-    sort($kelasList);
-    foreach ($kelasList as $kelas) {
-        echo "<option value=\"" . htmlspecialchars($kelas) . "\">" . htmlspecialchars($kelas) . "</option>";
-    }
-    ?>
-</select>
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Guru & Mapel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<br><br>
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-<table id="guruMapelTable" class="display">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Guru</th>
-            <th>Mata Pelajaran</th>
-            <th>Kelas</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $no = 1;
-        foreach ($data as $row): ?>
-            <tr>
-                <td><?= $no++ ?></td>
-                <td><?= htmlspecialchars($row['nama_guru']) ?></td>
-                <td><?= htmlspecialchars($row['nama_mapel']) ?></td>
-                <td><?= htmlspecialchars($row['nama_kelas']) ?></td>
-                <td>
-                    <a href="?page=guru_mapel_edit&id=<?= $row['id_guru_mapel'] ?>">Edit</a> |
-                    <a href="?page=guru_mapel_hapus&id=<?= $row['id_guru_mapel'] ?>" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
 
-<!-- DataTables + Export Excel -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/guru_mapel.css">
+</head>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<body>
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3><i class="bi bi-journal-text me-2"></i>Daftar Guru & Mata Pelajaran</h3>
+            <a href="?page=dashboard" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+            </a>
+        </div>
 
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <div class="card shadow-sm p-4">
+            <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
+                <a href="?page=guru_mapel_tambah" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Tambah Guru Mapel
+                </a>
 
-<script>
-    $(document).ready(function() {
-        const table = $('#guruMapelTable').DataTable({
-            dom: 'Bfrtip',
-            buttons: ['excel']
-        });
+                <div class="d-flex align-items-center gap-2">
+                    <label for="filterGuru" class="form-label mb-0">Filter Nama Guru:</label>
+                    <select id="filterGuru" class="form-select form-select-sm">
+                        <option value="">Semua</option>
+                        <?php
+                        $guruList = array_unique(array_map(fn($d) => $d['nama_guru'], $data));
+                        sort($guruList);
+                        foreach ($guruList as $guru) {
+                            echo '<option value="' . htmlspecialchars($guru) . '">' . htmlspecialchars($guru) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
 
-        // Filter kelas
-        $('#filterKelas').on('change', function() {
-            const val = $.fn.dataTable.util.escapeRegex($(this).val());
-            table.column(3).search(val ? '^' + val + '$' : '', true, false).draw(); // Kolom ke-4 = index 3
-        });
-    });
-</script>
+            <div class="table-responsive">
+                <table id="guruMapelTable" class="table table-striped table-bordered w-100">
+                    <thead class="table-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Guru</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Kelas</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1;
+                        foreach ($data as $row): ?>
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <td><?= htmlspecialchars($row['nama_guru']) ?></td>
+                                <td><?= htmlspecialchars($row['nama_mapel']) ?></td>
+                                <td><?= htmlspecialchars($row['nama_kelas']) ?></td>
+                                <td>
+                                    <a href="?page=guru_mapel_edit&id=<?= $row['id_guru_mapel'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="?page=guru_mapel_hapus&id=<?= $row['id_guru_mapel'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="assets/js/guru_mapel.js"></script>
+</body>
+
+</html>

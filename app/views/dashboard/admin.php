@@ -13,33 +13,37 @@ header("Pragma: no-cache");
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
+    <meta charset="UTF-8">
     <title>Dashboard Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/dashboard_admin.css">
 </head>
 
 <body>
-    <h2>Selamat Datang, Admin!</h2>
-    <p>Halo, <?= htmlspecialchars($_SESSION['user']['nama']) ?>!</p>
+    <div class="container">
+        <h2>Selamat Datang, Admin!</h2>
+        <p>Halo, <?= htmlspecialchars($_SESSION['user']['nama']) ?>!</p>
 
-    <a href="?page=guru_index">Data Guru</a>
-    <br>
-    <a href="?page=kelas_index">Data Kelas</a>
-    <br>
-    <a href="?page=siswa_index">Data Siswa</a>
-    <br>
-    <a href="?page=mapel_index">Data Mapel</a>
-    <br>
-    <a href="?page=guru_mapel_index">Data Guru Mapel</a>
-    <br>
-    <a href="?page=wali_kelas_index">Data Wali Kelas</a>
-    <br>
-    <a href="?page=jadwal">Jadwal</a>
-    <br>
-    <a href="?page=admin_redeem"><strong>🎓 Redeem Email Massal</strong></a> <!-- ✅ Tambahan Link -->
-    <br><br>
-    <a href="?page=logout">Logout</a>
+        <div class="menu-grid">
+            <a href="?page=guru_index">👨‍🏫 Data Guru</a>
+            <a href="?page=kelas_index">🏫 Data Kelas</a>
+            <a href="?page=siswa_index">👨‍🎓 Data Siswa</a>
+            <a href="?page=mapel_index">📘 Data Mapel</a>
+            <a href="?page=guru_mapel_index">📚 Guru Mapel</a>
+            <a href="?page=wali_kelas_index">🧑‍🏫 Wali Kelas</a>
+            <a href="?page=jadwal">🗓️ Jadwal</a>
+            <a href="?page=admin_redeem"><strong>🎓 Redeem Email Massal</strong></a>
+        </div>
+
+        <div class="logout">
+            <a href="?page=logout" class="btn-logout">🔓 Logout</a>
+        </div>
+    </div>
+
+    <script src="assets/js/dashboard_admin.js"></script>
 </body>
 
 </html>
