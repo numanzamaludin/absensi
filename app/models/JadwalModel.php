@@ -107,4 +107,29 @@ class JadwalModel
         $stmt->execute([$id_guru, $id_mapel, $id_kelas]);
         return $stmt->fetchColumn(); // hasil id_guru_mapel
     }
+
+
+
+    public function getJadwalByGuru($id_guru)
+    {
+        $db = Database::getConnection();
+
+        $stmt = $db->prepare("
+        SELECT 
+            j.hari, 
+            j.jam_mulai, 
+            j.jam_selesai, 
+            k.nama_kelas, 
+            m.nama_mapel
+        FROM jadwal j
+        JOIN guru_mapel gm ON j.id_guru_mapel = gm.id_guru_mapel
+        JOIN kelas k ON gm.id_kelas = k.id_kelas
+        JOIN mata_pelajaran m ON gm.id_mapel = m.id_mapel
+        WHERE gm.id_guru = :id_guru
+        ORDER BY FIELD(j.hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'), j.jam_mulai
+    ");
+
+        $stmt->execute(['id_guru' => $id_guru]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

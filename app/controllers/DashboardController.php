@@ -40,6 +40,13 @@ class DashboardController
             $absensiPendingGuru = $dashboardModel->getAbsensiPendingByGuru($guruId);
             $absensiDitolak = $dashboardModel->getAbsensiDitolakByGuru($guruId);
 
+
+            // ✅ Tambahkan Jadwal
+            require_once __DIR__ . '/../models/JadwalModel.php';
+            $jadwalModel = new JadwalModel();
+            $jadwal = $jadwalModel->getJadwalByGuru($guruId);
+
+
             // Jika wali kelas, ambil yang perlu disetujui
             $absensiPendingWali = $isWaliKelas
                 ? $dashboardModel->getAbsensiPendingForWaliKelas($guruId)

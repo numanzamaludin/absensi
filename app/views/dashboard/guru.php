@@ -38,7 +38,44 @@ $namaGuru = $_SESSION['user']['nama'] ?? $_SESSION['user']['email'];
         <?php endif; ?>
     </div>
 
+
+
     <div class="card">
+        <h3>📅 Jadwal Mengajar</h3>
+
+        <?php if (!empty($jadwal)): ?>
+            <div style="overflow-x: auto;">
+                <table class="table-absensi" style="min-width: 600px;">
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>Jam</th>
+                            <th>Kelas</th>
+                            <th>Mapel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($jadwal as $j): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($j['hari']) ?></td>
+                                <td><?= htmlspecialchars($j['jam_mulai']) ?> - <?= htmlspecialchars($j['jam_selesai']) ?></td>
+                                <td><?= htmlspecialchars($j['nama_kelas']) ?></td>
+                                <td><?= htmlspecialchars($j['nama_mapel']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <p><em>Belum ada jadwal mengajar.</em></p>
+        <?php endif; ?>
+    </div>
+
+
+
+
+
+    <!-- <div class="card">
         <h3>📚 Mata Pelajaran Diampu</h3>
         <ul>
             <?php if (!empty($mapel)): ?>
@@ -49,7 +86,12 @@ $namaGuru = $_SESSION['user']['nama'] ?? $_SESSION['user']['email'];
                 <li><em>Belum ada mata pelajaran.</em></li>
             <?php endif; ?>
         </ul>
-    </div>
+    </div> -->
+
+
+
+
+
 
     <div class="card">
         <h3>📝 Form Absensi</h3>
