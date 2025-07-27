@@ -1,0 +1,20 @@
+body {
+    background-color: #f8f9fa;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+.table thead th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.dataTables_wrapper .dt-buttons {
+    margin-bottom: 1rem;
+}
+
+#filterKelas {
+    min-width: 160px;
+}

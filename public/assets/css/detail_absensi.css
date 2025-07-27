@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    background-color: #f6f8fa;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+h2, h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.info p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 400px;
+}
+
+.responsive-table th,
+.responsive-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.responsive-table th {
+    background-color: #f0f0f0;
+}
+
+.button-wrapper {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-cancel {
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: #333;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-cancel:hover {
+    background-color: #bbb;
+}
+
+.sort-controls {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.sort-controls button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-left: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.sort-controls button:hover {
+    background-color: #e2e2e2;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 8px;
+    }
+
+    .btn-cancel {
+        width: 100%;
+    }
+
+    .sort-controls {
+        text-align: left;
+    }
+}

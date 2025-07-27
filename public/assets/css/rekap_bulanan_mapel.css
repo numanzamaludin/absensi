@@ -1,0 +1,111 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f1f5f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.btn-back {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.btn-back:hover {
+    text-decoration: underline;
+}
+
+.filter-form {
+    margin-bottom: 15px;
+}
+
+.filter-form select, .filter-form button {
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-filter {
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-filter:hover {
+    background: #1d4ed8;
+}
+
+.sort-controls {
+    margin-bottom: 10px;
+}
+
+.sort-controls button {
+    background: #e2e8f0;
+    border: none;
+    padding: 6px 10px;
+    margin-left: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.sort-controls button:hover {
+    background: #cbd5e1;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+}
+
+th {
+    background-color: #f9fafb;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    th, td {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    .filter-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-form label {
+        margin-bottom: 10px;
+    }
+}

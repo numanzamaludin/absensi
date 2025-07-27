@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    padding: 1rem;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 1rem;
+}
+
+.card {
+    background: #ffffff;
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: #555;
+}
+
+.filter-form {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.form-group label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.btn-primary {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    margin: 0.3rem 0.5rem 0.3rem 0;
+    padding: 0.4rem 1rem;
+    background: #28a745;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #218838;
+}
+
+.sort-buttons,
+.export-buttons {
+    margin: 10px 0;
+}
+
+/* ✅ Scroll hanya tabel */
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* ✅ Tabel responsif */
+.absensi-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* agar tetap scroll di layar kecil */
+}
+
+.absensi-table th,
+.absensi-table td {
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.absensi-table th {
+    background-color: #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-weight: bold;
+}
