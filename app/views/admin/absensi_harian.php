@@ -57,8 +57,11 @@
             loadAbsensiLive(); // initial load
             setInterval(loadAbsensiLive, 60000); // refresh setiap 60 detik
         });
+        //fitur baru
     </script>
 
+
 </body>
+
 
 </html>
