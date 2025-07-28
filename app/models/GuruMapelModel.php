@@ -83,4 +83,62 @@ class GuruMapelModel
         $stmt->execute([$id_guru_mapel]);
         return $stmt->fetchColumn() > 0;
     }
+
+
+
+
+
+
+
+
+    public function importGuruMapel($namaGuru, $namaMapel, $namaKelas)
+    {
+        $stmtGuru = $this->db->prepare("SELECT id_guru FROM guru WHERE nama_guru = ?");
+        $stmtGuru->execute([$namaGuru]);
+        $guru = $stmtGuru->fetch();
+
+        $stmtMapel = $this->db->prepare("SELECT id_mapel FROM mapel WHERE nama_mapel = ?");
+        $stmtMapel->execute([$namaMapel]);
+        $mapel = $stmtMapel->fetch();
+
+        $stmtKelas = $this->db->prepare("SELECT id_kelas FROM kelas WHERE nama_kelas = ?");
+        $stmtKelas->execute([$namaKelas]);
+        $kelas = $stmtKelas->fetch();
+
+        if (!$guru || !$mapel || !$kelas) return;
+
+        $cek = $this->db->prepare("SELECT * FROM guru_mapel WHERE id_guru = ? AND id_mapel = ? AND id_kelas = ?");
+        $cek->execute([$guru['id_guru'], $mapel['id_mapel'], $kelas['id_kelas']]);
+        if ($cek->fetch()) return;
+
+        $insert = $this->db->prepare("INSERT INTO guru_mapel (id_guru, id_mapel, id_kelas) VALUES (?, ?, ?)");
+        $insert->execute([$guru['id_guru'], $mapel['id_mapel'], $kelas['id_kelas']]);
+    }
+
+
+
+
+
+
+
+    public function getGuru()
+    {
+        $stmt = $this->db->prepare("SELECT DISTINCT nama_guru FROM guru ORDER BY nama_guru ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getMapel()
+    {
+        $stmt = $this->db->prepare("SELECT DISTINCT nama_mapel FROM mata_pelajaran ORDER BY nama_mapel ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getKelas()
+    {
+        $stmt = $this->db->prepare("SELECT DISTINCT nama_kelas FROM kelas ORDER BY nama_kelas ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

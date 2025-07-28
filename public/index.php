@@ -442,6 +442,24 @@ switch ($page) {
 
 
 
+    case 'guru_mapel_import':
+        require_once __DIR__ . '/../app/controllers/GuruMapelController.php';
+        $controller = new GuruMapelController();
+        $controller->importExcel();
+        break;
+
+
+
+
+    case 'unduh_template_guru_mapel':
+        require_once __DIR__ . '/../app/controllers/GuruMapelController.php';
+        $controller = new GuruMapelController();
+        $controller->unduhTemplate();
+        break;
+
+
+
+
     default:
         echo "404 - Halaman tidak ditemukan.";
         break;

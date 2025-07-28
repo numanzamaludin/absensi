@@ -4,6 +4,12 @@ require_once __DIR__ . '/../models/GuruModel.php';
 require_once __DIR__ . '/../models/MapelModel.php';
 require_once __DIR__ . '/../models/KelasModel.php';
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+
 
 class GuruMapelController
 {
@@ -82,6 +88,120 @@ class GuruMapelController
 
         $this->model->delete($id);
         header("Location: ?page=guru_mapel_index&status=sukses");
+        exit;
+    }
+
+
+
+
+
+
+
+
+
+
+    public function importExcel()
+    {
+        require_once __DIR__ . '/../../vendor/autoload.php'; // Sesuaikan path ke autoload
+
+        if (!isset($_FILES['import_file']) || $_FILES['import_file']['error'] !== 0) {
+            $_SESSION['flash'] = 'Gagal mengunggah file Excel.';
+            header('Location: ?page=guru_mapel');
+            exit;
+        }
+
+        $filePath = $_FILES['import_file']['tmp_name'];
+        $spreadsheet = IOFactory::load($filePath);
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray();
+
+        $isHeader = true;
+        foreach ($rows as $row) {
+            if ($isHeader) {
+                $isHeader = false; // Lewati baris header
+                continue;
+            }
+
+            [$namaGuru, $namaMapel, $namaKelas] = array_map('trim', $row);
+
+            // Simpan ke database via model
+            $this->model->importGuruMapel($namaGuru, $namaMapel, $namaKelas);
+        }
+
+        $_SESSION['flash'] = 'Import Excel berhasil!';
+        header('Location: ?page=guru_mapel');
+    }
+
+
+    public function unduhTemplate()
+    {
+        // Load model
+        $guruList  = $this->model->getGuru();     // ex: [['nama_guru' => 'Ahmad']]
+        $mapelList = $this->model->getMapel();    // ex: [['nama_mapel' => 'Matematika']]
+        $kelasList = $this->model->getKelas();    // ex: [['nama_kelas' => 'X IPA 1']]
+
+        $spreadsheet = new Spreadsheet();
+
+        // Sheet utama
+        $mainSheet = $spreadsheet->getActiveSheet();
+        $mainSheet->setTitle('Template Import');
+        $mainSheet->setCellValue('A1', 'Nama Guru');
+        $mainSheet->setCellValue('B1', 'Mata Pelajaran');
+        $mainSheet->setCellValue('C1', 'Kelas');
+
+        // Sheet Dropdown
+        $dropdownSheet = new Worksheet($spreadsheet, 'Dropdown');
+        $spreadsheet->addSheet($dropdownSheet);
+
+        // Masukkan data dropdown
+        foreach ($guruList as $i => $guru) {
+            $dropdownSheet->setCellValue('A' . ($i + 1), $guru['nama_guru']);
+        }
+        foreach ($mapelList as $i => $mapel) {
+            $dropdownSheet->setCellValue('B' . ($i + 1), $mapel['nama_mapel']);
+        }
+        foreach ($kelasList as $i => $kelas) {
+            $dropdownSheet->setCellValue('C' . ($i + 1), $kelas['nama_kelas']);
+        }
+
+        $lastGuruRow  = count($guruList);
+        $lastMapelRow = count($mapelList);
+        $lastKelasRow = count($kelasList);
+
+        // Data validation template
+        $dvGuru = new DataValidation();
+        $dvGuru->setType(DataValidation::TYPE_LIST);
+        $dvGuru->setErrorStyle(DataValidation::STYLE_INFORMATION);
+        $dvGuru->setAllowBlank(false);
+        $dvGuru->setShowInputMessage(true);
+        $dvGuru->setShowErrorMessage(true);
+        $dvGuru->setShowDropDown(true);
+        $dvGuru->setFormula1("=Dropdown!A1:A$lastGuruRow");
+
+        $dvMapel = clone $dvGuru;
+        $dvMapel->setFormula1("=Dropdown!B1:B$lastMapelRow");
+
+        $dvKelas = clone $dvGuru;
+        $dvKelas->setFormula1("=Dropdown!C1:C$lastKelasRow");
+
+        // Pasang data validation ke baris 2–100
+        for ($row = 2; $row <= 100; $row++) {
+            $mainSheet->getCell("A$row")->setDataValidation(clone $dvGuru);
+            $mainSheet->getCell("B$row")->setDataValidation(clone $dvMapel);
+            $mainSheet->getCell("C$row")->setDataValidation(clone $dvKelas);
+        }
+
+        // Sembunyikan sheet dropdown
+        $dropdownSheet->setSheetState(Worksheet::SHEETSTATE_HIDDEN);
+        $spreadsheet->setActiveSheetIndex(0);
+
+        // Output ke browser
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="template_guru_mapel.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
         exit;
     }
 }

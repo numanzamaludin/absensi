@@ -28,6 +28,18 @@ if (!isset($_SESSION['user'])) {
 
 <body>
     <div class="container my-5">
+
+
+        <?php if (!empty($_SESSION['flash'])): ?>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <?= $_SESSION['flash'];
+                unset($_SESSION['flash']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
+
+
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3><i class="bi bi-journal-text me-2"></i>Daftar Guru & Mata Pelajaran</h3>
             <a href="?page=dashboard" class="btn btn-secondary">
@@ -40,6 +52,23 @@ if (!isset($_SESSION['user'])) {
                 <a href="?page=guru_mapel_tambah" class="btn btn-success">
                     <i class="bi bi-plus-circle"></i> Tambah Guru Mapel
                 </a>
+
+
+                <!-- Tombol Import -->
+                <form action="?page=guru_mapel_import" method="post" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+                    <input type="file" name="import_file" accept=".xlsx,.xls" required class="form-control form-control-sm" style="max-width: 250px;">
+                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-upload"></i> Import Excel
+                    </button>
+                </form>
+
+                <a href="?page=unduh_template_guru_mapel" class="btn btn-outline-info btn-sm">
+                    <i class="bi bi-download"></i> Unduh Template Excel
+                </a>
+
+
+
+
 
                 <div class="d-flex align-items-center gap-2">
                     <label for="filterGuru" class="form-label mb-0">Filter Nama Guru:</label>
@@ -55,6 +84,11 @@ if (!isset($_SESSION['user'])) {
                     </select>
                 </div>
             </div>
+
+
+
+
+
 
             <div class="table-responsive">
                 <table id="guruMapelTable" class="table table-striped table-bordered w-100">
