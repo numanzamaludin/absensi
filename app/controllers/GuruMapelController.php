@@ -102,7 +102,7 @@ class GuruMapelController
 
     public function importExcel()
     {
-        require_once __DIR__ . '/../../vendor/autoload.php'; // Sesuaikan path ke autoload
+        require_once __DIR__ . '/../../vendor/autoload.php'; // Pastikan path ini benar
 
         if (!isset($_FILES['import_file']) || $_FILES['import_file']['error'] !== 0) {
             $_SESSION['flash'] = 'Gagal mengunggah file Excel.';
@@ -110,27 +110,48 @@ class GuruMapelController
             exit;
         }
 
-        $filePath = $_FILES['import_file']['tmp_name'];
-        $spreadsheet = IOFactory::load($filePath);
-        $sheet = $spreadsheet->getActiveSheet();
-        $rows = $sheet->toArray();
+        try {
+            $filePath = $_FILES['import_file']['tmp_name'];
+            $spreadsheet = IOFactory::load($filePath);
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
 
-        $isHeader = true;
-        foreach ($rows as $row) {
-            if ($isHeader) {
-                $isHeader = false; // Lewati baris header
-                continue;
+            $isHeader = true;
+            $sukses = 0;
+            $gagal = 0;
+
+            foreach ($rows as $row) {
+                if ($isHeader) {
+                    $isHeader = false;
+                    continue; // lewati baris header
+                }
+
+                // Lewati baris kosong
+                if (empty($row[0]) && empty($row[1]) && empty($row[2])) {
+                    continue;
+                }
+
+                // Ambil data, trim untuk bersih dari spasi
+                [$namaGuru, $namaMapel, $namaKelas] = array_map('trim', $row);
+
+                // Validasi minimal
+                if ($namaGuru && $namaMapel && $namaKelas) {
+                    $this->model->importGuruMapel($namaGuru, $namaMapel, $namaKelas);
+                    $sukses++;
+                } else {
+                    $gagal++;
+                }
             }
 
-            [$namaGuru, $namaMapel, $namaKelas] = array_map('trim', $row);
-
-            // Simpan ke database via model
-            $this->model->importGuruMapel($namaGuru, $namaMapel, $namaKelas);
+            $_SESSION['flash'] = "Import selesai. Berhasil: $sukses. Gagal: $gagal.";
+        } catch (Exception $e) {
+            $_SESSION['flash'] = 'Terjadi kesalahan saat memproses file: ' . $e->getMessage();
         }
 
-        $_SESSION['flash'] = 'Import Excel berhasil!';
-        header('Location: ?page=guru_mapel');
+        header('Location: ?page=guru_mapel_index');
+        exit;
     }
+
 
 
     public function unduhTemplate()

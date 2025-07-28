@@ -97,7 +97,7 @@ class GuruMapelModel
         $stmtGuru->execute([$namaGuru]);
         $guru = $stmtGuru->fetch();
 
-        $stmtMapel = $this->db->prepare("SELECT id_mapel FROM mapel WHERE nama_mapel = ?");
+        $stmtMapel = $this->db->prepare("SELECT id_mapel FROM mata_pelajaran WHERE nama_mapel = ?");
         $stmtMapel->execute([$namaMapel]);
         $mapel = $stmtMapel->fetch();
 
