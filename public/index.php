@@ -460,6 +460,10 @@ switch ($page) {
 
 
 
+
+
+
+
     default:
         echo "404 - Halaman tidak ditemukan.";
         break;
