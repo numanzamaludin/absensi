@@ -5,7 +5,7 @@ function toggleAll(source) {
 
 $(document).ready(function () {
     $('#siswaTable').DataTable({
-        dom: '<"row mb-3"<"col-md-6"l><"col-md-6 text-end"Bf>>rt<"row mt-3"<"col-md-6"i><"col-md-6"p>>',
+        dom: '<"row mb-3"<"col-sm-6"l><"col-sm-6 text-end"Bf>>rt<"row mt-3"<"col-sm-6"i><"col-sm-6"p>>',
         buttons: ['excel'],
         responsive: true,
         language: {

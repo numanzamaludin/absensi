@@ -10,11 +10,33 @@ class SiswaController
         $this->model = new SiswaModel();
     }
 
+    // public function index()
+    // {
+    //     $data = $this->model->getAll();
+    //     $kelasList = $this->model->getAllKelas(); // ← Tambahkan ini
+    //     include __DIR__ . '/../views/siswa/index.php';
+    // }
+
+
+
     public function index()
     {
-        $data = $this->model->getAll();
+        $filterKelas = $_GET['filter_kelas'] ?? null;
+
+        $kelasList = $this->model->getAllKelas();
+
+        if ($filterKelas) {
+            $data = $this->model->getByKelas($filterKelas);
+        } else {
+            $data = $this->model->getAll();
+        }
+
         include __DIR__ . '/../views/siswa/index.php';
     }
+
+
+
+
 
     public function tambah()
     {
@@ -95,5 +117,24 @@ class SiswaController
         </tr>";
         }
         echo '</tbody></table>';
+    }
+
+
+
+
+
+    public function bulkUpdate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ids = $_POST['selected_ids'] ?? [];
+            $kelasBaru = $_POST['kelas_baru'] ?? null;
+
+            if (!empty($ids) && $kelasBaru) {
+                $this->model->updateKelasBulk($ids, $kelasBaru);
+            }
+        }
+
+        header("Location: ?page=siswa_index");
+        exit;
     }
 }

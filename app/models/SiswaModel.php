@@ -84,4 +84,35 @@ class SiswaModel
         $stmt = $this->db->query("SELECT * FROM kelas ORDER BY nama_kelas ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
+    public function updateKelasBulk(array $ids, $kelasBaru)
+    {
+        if (empty($ids)) return;
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $sql = "UPDATE siswa SET id_kelas = ? WHERE id_siswa IN ($placeholders)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array_merge([$kelasBaru], $ids));
+    }
+
+
+
+
+
+
+
+    public function getByKelas($id_kelas)
+    {
+        $stmt = $this->db->prepare("
+        SELECT siswa.*, kelas.nama_kelas 
+        FROM siswa 
+        LEFT JOIN kelas ON siswa.id_kelas = kelas.id_kelas 
+        WHERE siswa.id_kelas = :id_kelas
+        ORDER BY siswa.nama_siswa ASC
+    ");
+        $stmt->execute(['id_kelas' => $id_kelas]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

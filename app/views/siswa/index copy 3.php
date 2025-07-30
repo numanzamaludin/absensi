@@ -1,5 +1,3 @@
-<a href="?page=dashboard">⬅ Kembali ke Dashboard</a> |
-
 <?php if ($_SESSION['user']['role'] === 'admin'): ?>
     <li><a href="?page=import_siswa">Import Siswa</a></li>
 <?php endif; ?>

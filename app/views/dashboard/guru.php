@@ -7,6 +7,21 @@ if (!isset($_SESSION['user'])) {
 }
 
 $namaGuru = $_SESSION['user']['nama'] ?? $_SESSION['user']['email'];
+
+
+
+
+// 🔽 Tambahkan di sini: filter duplikat mapel
+$uniqueMapel = [];
+$filteredMapel = [];
+
+foreach ($mapel as $m) {
+    $key = $m['id_mapel'];
+    if (!isset($uniqueMapel[$key])) {
+        $uniqueMapel[$key] = true;
+        $filteredMapel[] = $m;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -126,9 +141,23 @@ $namaGuru = $_SESSION['user']['nama'] ?? $_SESSION['user']['email'];
             <label>Pilih Mapel:
                 <select name="mapel" required>
                     <option value="">-- Pilih Mapel --</option>
-                    <?php foreach ($mapel as $m): ?>
+
+
+
+                    <!-- <?php foreach ($mapel as $m): ?>
+                        <option value="<?= $m['id_mapel'] ?? '' ?>"><?= htmlspecialchars($m['nama_mapel'] ?? '-') ?></option>
+                    <?php endforeach; ?> -->
+
+
+                    <?php foreach ($filteredMapel as $m): ?>
                         <option value="<?= $m['id_mapel'] ?? '' ?>"><?= htmlspecialchars($m['nama_mapel'] ?? '-') ?></option>
                     <?php endforeach; ?>
+
+
+
+
+
+
                 </select>
             </label>
 

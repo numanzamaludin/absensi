@@ -459,6 +459,11 @@ switch ($page) {
 
 
 
+    case 'siswa_bulk_update':
+        require_once __DIR__ . '/../app/controllers/SiswaController.php';
+        $controller = new SiswaController();
+        $controller->bulkUpdate();
+        break;
 
 
 
