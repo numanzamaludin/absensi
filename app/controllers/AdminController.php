@@ -45,10 +45,11 @@ class AdminController
         $jadwalGabung = [];
 
         foreach ($jadwalHariIni as $jadwal) {
-            // Lewati jadwal jika sudah lewat jam_selesai
-            if ($jadwal['jam_selesai'] <= $waktuSekarang) {
+            // Lewati jika belum dimulai atau sudah selesai
+            if ($jadwal['jam_mulai'] > $waktuSekarang || $jadwal['jam_selesai'] < $waktuSekarang) {
                 continue;
             }
+
 
             $sudahAbsen = false;
             foreach ($absensiHariIni as $absen) {
@@ -75,6 +76,7 @@ class AdminController
         date_default_timezone_set('Asia/Jakarta');
         $hariIni = date('l');
         $tanggal = date('Y-m-d');
+        $waktuSekarang = date('H:i:s'); // Tambahkan ini
 
         $hariMap = [
             'Monday' => 'Senin',
@@ -91,14 +93,19 @@ class AdminController
         $absensiHariIni = $this->absensiModel->getAbsensiHariIniAdmin($tanggal);
 
         $jadwalGabung = [];
+
         foreach ($jadwalHariIni as $jadwal) {
-            // Filter hanya yang aktif
-            $jamSelesai = strtotime($jadwal['jam_selesai']);
-            if ($jamSelesai < time()) continue;
+            // Hanya tampilkan jadwal yang sedang berlangsung sekarang
+            if ($jadwal['jam_mulai'] > $waktuSekarang || $jadwal['jam_selesai'] < $waktuSekarang) {
+                continue;
+            }
 
             $sudahAbsen = false;
             foreach ($absensiHariIni as $absen) {
-                if ($absen['id_guru'] == $jadwal['id_guru'] && $absen['id_jadwal'] == $jadwal['id_jadwal']) {
+                if (
+                    $absen['id_guru'] == $jadwal['id_guru'] &&
+                    $absen['id_jadwal'] == $jadwal['id_jadwal']
+                ) {
                     $sudahAbsen = true;
                     $jadwal['waktu_absen'] = $absen['waktu'];
                     break;

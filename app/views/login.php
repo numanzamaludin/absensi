@@ -20,6 +20,12 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password" required>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="showPassword">
+                                <label class="form-check-label" for="showPassword">
+                                    Tampilkan Password
+                                </label>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">Login</button>
@@ -29,5 +35,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    // JavaScript untuk toggle password visibility
+    document.getElementById('showPassword').addEventListener('change', function() {
+        const passwordField = document.getElementById('password');
+        passwordField.type = this.checked ? 'text' : 'password';
+    });
+</script>
 
 <?php require_once __DIR__ . '/partials/footer.php'; ?>
