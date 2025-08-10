@@ -539,4 +539,32 @@ class AbsensiModel
         $stmt->execute([$tanggal]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
+    public function getAbsensiByTanggalRange($start_date, $end_date)
+    {
+        $stmt = $this->db->prepare("
+        SELECT * FROM absensi
+        WHERE DATE(waktu) BETWEEN :start_date AND :end_date
+    ");
+        $stmt->execute([
+            ':start_date' => $start_date,
+            ':end_date' => $end_date
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+
+    public function getAbsensiGuruTanggal($idGuru, $tanggal)
+    {
+        $stmt = $this->db->prepare("
+        SELECT * FROM absensi_guru
+        WHERE id_guru = ? AND tanggal = ?
+    ");
+        $stmt->execute([$idGuru, $tanggal]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

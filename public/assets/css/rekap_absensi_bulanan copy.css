@@ -1,0 +1,50 @@
+.container {
+    padding: 20px;
+}
+
+.filter-form {
+    margin-bottom: 20px;
+}
+
+table.dataTable thead th {
+    background: #f8f9fa;
+}
+
+.btn-detail {
+    background: #007bff;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-detail:hover {
+    background: #0056b3;
+}
+
+.btn-reset {
+    margin-left: 10px;
+    background: #dc3545;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-reset:hover {
+    background: #a71d2a;
+}
+
+.btn-kembali {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 6px 10px;
+    background: #6c757d;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-kembali:hover {
+    background: #5a6268;
+}

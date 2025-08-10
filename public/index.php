@@ -440,6 +440,30 @@ switch ($page) {
         $controller->loadAbsensiLive();
         break;
 
+    case 'rekap_absensi_harian':
+        include __DIR__ . '/../app/views/admin/rekap_absensi_harian.php';
+        break;
+
+    case 'rekap_absensi_harian_export':
+        include __DIR__ . '/../app/exports/rekap_absensi_harian_export.php';
+        break;
+
+    case 'rekap_absensi_bulanan':
+        include __DIR__ . '/../app/views/admin/rekap_absensi_bulanan.php';
+        break;
+
+    case 'detail_absensi_guru':
+        include __DIR__ . '/../app/views/admin/detail_absensi_guru.php';
+        break;
+
+    case 'rekap_absensi_bulanan_export':
+        require __DIR__ . '/../app/exports/rekap_absensi_bulanan_export.php';
+        break;
+
+    case 'rekap_absensi_detail_export':
+        require __DIR__ . '/../app/exports/rekap_absensi_detail_export.php';
+        break;
+
 
 
     case 'guru_mapel_import':

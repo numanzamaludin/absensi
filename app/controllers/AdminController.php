@@ -118,4 +118,20 @@ class AdminController
 
         include __DIR__ . '/../views/admin/table_absensi_live.php';
     }
+
+
+
+
+    public function detailAbsensiGuru()
+    {
+        // cek hak akses admin/kepsek jika perlu
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+            header('Location: ?page=unauthorized');
+            exit;
+        }
+
+        // cukup include view yang sudah dibuat (view akan membaca $_GET untuk id_guru, bulan, tahun)
+        include __DIR__ . '/../views/admin/detail_absensi_guru.php';
+    }
 }

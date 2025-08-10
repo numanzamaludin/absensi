@@ -206,4 +206,49 @@ class JadwalModel
         $stmt->execute(['hari' => $hari]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
+    public function getJadwalByTanggalRange($start_date, $end_date)
+    {
+        $stmt = $this->db->prepare("
+        SELECT j.*, g.nama_guru, m.nama_mapel, k.nama_kelas, j.hari
+        FROM jadwal j
+        JOIN guru g ON j.id_guru = g.id_guru
+        JOIN mapel m ON j.id_mapel = m.id_mapel
+        JOIN kelas k ON j.id_kelas = k.id_kelas
+        WHERE j.hari BETWEEN :start_date AND :end_date
+        ORDER BY j.hari, j.jam_mulai
+    ");
+        $stmt->execute([
+            ':start_date' => $start_date,
+            ':end_date' => $end_date
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+    public function getJadwalByHariAndGuru($hari, $idGuru)
+    {
+        $stmt = $this->db->prepare("
+        SELECT 
+            j.id_jadwal,
+            j.hari,
+            j.jam_mulai,
+            j.jam_selesai,
+            g.nama_guru,
+            mp.nama_mapel,
+            k.nama_kelas
+        FROM jadwal j
+        JOIN guru_mapel gm ON j.id_guru_mapel = gm.id_guru_mapel
+        JOIN guru g ON gm.id_guru = g.id_guru
+        JOIN mata_pelajaran mp ON gm.id_mapel = mp.id_mapel
+        JOIN kelas k ON gm.id_kelas = k.id_kelas
+        WHERE j.hari = ? AND g.id_guru = ?
+        ORDER BY j.jam_mulai
+    ");
+        $stmt->execute([$hari, $idGuru]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

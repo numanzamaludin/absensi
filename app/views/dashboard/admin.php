@@ -36,9 +36,16 @@ header("Pragma: no-cache");
             <a href="?page=wali_kelas_index">🧑‍🏫 Wali Kelas</a>
             <a href="?page=jadwal">🗓️ Jadwal</a>
             <a href="?page=admin_redeem"><strong>🎓 Redeem Email Massal</strong></a>
-            <a href="?page=absensi_harian_guru"><strong>Lihat Absensi Guru Harian</strong></a>
+
+
         </div>
 
+        <h2>Absensi Guru</h2>
+        <div class="menu-grid">
+            <a href="?page=absensi_harian_guru"><strong>Live Absensi Guru</strong></a>
+            <a href="?page=rekap_absensi_harian"><strong>📅 Rekap Absensi Harian</strong></a>
+            <a href="?page=rekap_absensi_bulanan"><strong>📊 Rekap Absensi Bulanan</strong></a>
+        </div>
         <div class="logout">
             <a href="?page=logout" class="btn-logout">🔓 Logout</a>
         </div>
